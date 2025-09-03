@@ -13,14 +13,19 @@ public class MyThread extends  Thread{
     }
 
     @Override
-    public void run() {
+    public void run() {  //Cannot use throws here as this is overridden method.
         System.out.println("5 inside run");
         try {
             Thread.sleep(1110);
+            method1();
             for (int i =0;i<10;i++ )
                 System.out.println(i);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void method1(){
+        System.out.println("Inside Method1");
     }
 }
