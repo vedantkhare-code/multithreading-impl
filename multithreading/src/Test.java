@@ -10,6 +10,7 @@ public class Test {
                 System.out.println("Thread FI");
         };
         Thread t2= new Thread(r1);
+        
         t2.start();
 
         for( ; ; )
