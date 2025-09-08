@@ -9,15 +9,21 @@ public class BankAccount {
     public  void withdraw(int amount) {
         System.out.println(Thread.currentThread().getName() + " is waiting to withdraw");
         try {
-            if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
-                if (balance >= amount) {
-                    System.out.println(Thread.currentThread().getName() + " is  withdrawing");
-                    Thread.sleep(2000);
-                    balance -= amount;
-                } else {
-                    System.out.println(Thread.currentThread().getName() + " insufficient balance.....");
+            if(lock.tryLock(10000, TimeUnit.MILLISECONDS)) {
+                try {
+                    if (balance >= amount) {
+                        System.out.println(Thread.currentThread().getName() + " is  withdrawing");
+                        Thread.sleep(2000);
+                        balance -= amount;
+                    } else {
+                        System.out.println(Thread.currentThread().getName() + " insufficient balance.....");
+                    }
+                    System.out.println(Thread.currentThread().getName() + " balance left : " + balance);
+                }catch (Exception e){}
+                finally {
+                    lock.unlock();
+
                 }
-                System.out.println(Thread.currentThread().getName() + " balance left : " + balance);
             }else{
                 System.out.println(Thread.currentThread().getName() + " was not able to acquire lock ");
             }
