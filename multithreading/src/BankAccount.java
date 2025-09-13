@@ -19,8 +19,11 @@ public class BankAccount {
                         System.out.println(Thread.currentThread().getName() + " insufficient balance.....");
                     }
                     System.out.println(Thread.currentThread().getName() + " balance left : " + balance);
-                }catch (Exception e){}
+                }catch (Exception e){
+                    Thread.interrupted(); // always interupt the thread when flow comed to the catch block.
+                }
                 finally {
+                    System.out.println(Thread.currentThread().getName()+"  Releasing the lock");
                     lock.unlock();
 
                 }
@@ -28,7 +31,7 @@ public class BankAccount {
                 System.out.println(Thread.currentThread().getName() + " was not able to acquire lock ");
             }
         }catch(Exception e){
-
+            Thread.interrupted();
         }
     }
 
